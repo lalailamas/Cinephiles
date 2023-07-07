@@ -1,8 +1,4 @@
 import { useState, useEffect } from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import 'tailwindcss/tailwind.css';
 
 
 const Home = () => {
@@ -26,31 +22,25 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="container mx-auto">
-      <h1 className="text-3xl font-bold my-4">Top Rated Movies</h1>
-      <Slider
-        slidesToShow={4}
-        infinite={true}
-        // nextArrow={<NextArrow />}
-        // prevArrow={<PrevArrow />}
-        className="my-4"
-      >
+    
+    <div className="container ml-96 mt-10"> 
+      <h1 className="text-2xl font-bold text-white">POPULAR FILMS THIS WEEK</h1>
+      <div className="flex overflow-x-scroll">
         {movies.map(movie => (
-          <div key={movie.id} className="px-2">
+          <div key={movie.id} className="flex-none w-48 mr-2">
             <img
               src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
               alt={movie.title}
-              className="rounded-lg"
+              className="w-full rounded-lg border border-custom-light-yellow"
             />
             <div className="mt-2">
-              <h2 className="text-lg font-semibold">{movie.title}</h2>
+              <h2 className="text-lg font-semibold text-white">{movie.title}</h2>
             </div>
           </div>
         ))}
-      </Slider>
-    </div>
+      </div>
+    </div> 
   );
-  
-        }
+}
 
 export default Home;
