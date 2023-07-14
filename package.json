@@ -1,5 +1,5 @@
 {
-  "name": "react",
+  "name": "Cinephiles",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "css-loader": "^6.8.1",
+    "jsdom": "^22.1.0",
     "node-fetch": "^2.6.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -19,6 +20,7 @@
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
+    "@testing-library/react": "^14.0.0",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^4.0.0",
@@ -27,6 +29,8 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "jest": "29.6.1",
+    "jest-dom": "^4.0.0",
     "postcss": "^8.4.25",
     "tailwindcss": "^3.3.2",
     "vite": "^4.3.9"

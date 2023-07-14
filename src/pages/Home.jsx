@@ -1,42 +1,35 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getHttp } from "../utils";
+import {
+  fetchTopRatedMovies,
+  fetchPopularMovies,
+  fetchReviewMovie,
+} from "../api/movieApi";
 
 const Home = () => {
   const [topRated, setTopRated] = useState([]);
-  const [movieReview, setMovieReview] = useState(null);
-  const [movieTitle, setMovieTitle] = useState("");
-  const [posterMovie, setPosterMovie] = useState("");
-  const [review, setReview] = useState([]);
+  const [reviews, setReviews] = useState([]);
+  const [movie, setMovie] = useState(null);
 
   useEffect(() => {
-    getHttp(
-      "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1"
-    )
+    fetchTopRatedMovies()
       .then((data) => {
-        setTopRated(data.results);
+        setTopRated(data);
       })
       .catch((err) => console.error(err));
 
-    getHttp(
-      "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1"
-    ).then((data) => {
-      setMovieReview(data.results[0]);
-      setMovieTitle(data.results[0].original_title);
-      setPosterMovie(data.results[0].poster_path);
+    fetchPopularMovies().then((data) => {
+      setMovie(data[0]);
     });
   }, []);
 
   useEffect(() => {
-    if (movieReview !== null) {
-      getHttp(
-        `https://api.themoviedb.org/3/movie/${movieReview.id}/reviews?language=en-US&page=1`
-      ).then((data) => {
-        // console.log(data)
-        setReview(data.results);
+    if (movie !== null) {
+      fetchReviewMovie(movie.id).then((data) => {
+        setReviews(data);
       });
     }
-  }, [movieReview]);
+  }, [movie]);
 
   const truncateContent = (content, maxLength) => {
     if (content.length <= maxLength) {
@@ -84,18 +77,21 @@ const Home = () => {
 
         <div>
           <h1 className="text-2xl font-bold text-white mt-10 mb-4">
-            POPULAR REVIEWS of <em>{movieTitle} </em>
+            POPULAR REVIEWS of <em>{movie?.title} </em>
           </h1>
           <div className="flex flex-row">
             <img
-              src={`https://image.tmdb.org/t/p/w200${posterMovie}`}
-              alt={posterMovie}
+              src={`https://image.tmdb.org/t/p/w200${movie?.poster_path}`}
+              alt={"poster-movie"}
               className="rounded-lg border border-custom-light-yellow mr-2"
             />
 
             <ul className="text-white mt-18">
-              {review.map((reviewItem) => (
-                <li key={reviewItem.author} className="border-b-2 mb-2 text-white">
+              {reviews.map((reviewItem) => (
+                <li
+                  key={reviewItem.author}
+                  className="border-b-2 mb-2 text-white"
+                >
                   Author: {reviewItem.author}
                   <br></br>
                   <em> {truncateContent(reviewItem.content, 300)}</em>
@@ -104,10 +100,6 @@ const Home = () => {
             </ul>
           </div>
         </div>
-
-
-
-
       </div>
     </div>
   );
