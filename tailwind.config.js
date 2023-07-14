@@ -8,7 +8,9 @@ export default {
     extend: {
       colors:{
         'custom-red': '#D84C3E',
-        'custom-light-yellow': '#E1B867'
+        'custom-light-yellow': '#E1B867',
+        'custom-white': '#D7D6D4',
+        'custom-yellow':'#E1B867',
       }
     },
   },

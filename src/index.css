@@ -2,10 +2,10 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-.dotted-line {
+.dashed-line {
   border-style: dashed;
   border-color: #E1B867;
-  border-width: 0.3rem;
+  border-width: 0.4rem;
   height: 100%;
 }
 
