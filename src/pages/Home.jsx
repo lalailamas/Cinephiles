@@ -8,8 +8,8 @@ import {
 
 const Home = () => {
   const [topRated, setTopRated] = useState([]);
+  const [popular, setPopular] = useState(null);
   const [reviews, setReviews] = useState([]);
-  const [movie, setMovie] = useState(null);
 
   useEffect(() => {
     fetchTopRatedMovies()
@@ -19,17 +19,17 @@ const Home = () => {
       .catch((err) => console.error(err));
 
     fetchPopularMovies().then((data) => {
-      setMovie(data[0]);
+      setPopular(data[0]);
     });
   }, []);
 
   useEffect(() => {
-    if (movie !== null) {
-      fetchReviewMovie(movie.id).then((data) => {
+    if (popular !== null) {
+      fetchReviewMovie(popular.id).then((data) => {
         setReviews(data);
       });
     }
-  }, [movie]);
+  }, [popular]);
 
   const truncateContent = (content, maxLength) => {
     if (content.length <= maxLength) {
@@ -74,30 +74,28 @@ const Home = () => {
             </div>
           ))}
         </div>
-
         <div>
           <h1 className="text-2xl font-bold text-white mt-10 mb-4">
-            POPULAR REVIEWS of <em>{movie?.title} </em>
+            POPULAR REVIEWS of <em>{popular?.title} </em>
           </h1>
-          <div className="flex flex-row">
-            <img
-              src={`https://image.tmdb.org/t/p/w200${movie?.poster_path}`}
-              alt={"poster-movie"}
-              className="rounded-lg border border-custom-light-yellow mr-2"
-            />
-
-            <ul className="text-white mt-18">
-              {reviews.map((reviewItem) => (
-                <li
-                  key={reviewItem.author}
-                  className="border-b-2 mb-2 text-white"
+          <div className="mt-4">
+            <h2 className="text-xl font-semibold mb-4">Reviews</h2>
+            <div className="flex flex-wrap">
+              {reviews.map((reviewItem, index) => (
+                <div
+                  key={index}
+                  className="bg-custom-gray rounded-lg p-4 mr-4 mb-4 shadow-md border-2 border-custom-yellow"
+                  style={{ maxWidth: "300px" }}
                 >
-                  Author: {reviewItem.author}
-                  <br></br>
-                  <em> {truncateContent(reviewItem.content, 300)}</em>
-                </li>
+                  <p className="text-sm font-medium text-black">
+                    {reviewItem.author}
+                  </p>
+                  <p className="text-black">
+                    {truncateContent(reviewItem.content, 300)}
+                  </p>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
       </div>

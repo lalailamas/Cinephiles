@@ -11,6 +11,7 @@ export default {
         'custom-light-yellow': '#E1B867',
         'custom-white': '#D7D6D4',
         'custom-yellow':'#E1B867',
+        'custom-gray': "#D7D6D4",
       }
     },
   },
